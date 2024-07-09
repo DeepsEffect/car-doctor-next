@@ -47,14 +47,27 @@ export default function Nav() {
           className="sm:hidden"
         />
         <NavbarBrand>
-          <Image src={"/assets/logo.svg"} alt="logo" width={70} height={100} />
+          <Link href="/">
+            <Image
+              src={"/assets/logo.svg"}
+              alt="logo"
+              width={70}
+              height={100}
+            />
+          </Link>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         {menuItems.map((menu) => (
-          <NavbarItem key={menu.title}>
-            <Link href={menu.path}>{menu.title}</Link>
+          <NavbarItem key={menu.path}>
+            <Link
+              color="foreground"
+              className="hover:text-primary duration-300 transition-colors"
+              href={menu.path}
+            >
+              {menu.title}
+            </Link>
           </NavbarItem>
         ))}
       </NavbarContent>
@@ -66,19 +79,13 @@ export default function Nav() {
           </Button>
         </NavbarItem>
       </NavbarContent>
-        {/* mobile menu */}
+      {/* mobile menu */}
       <NavbarMenu>
         {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item.title}-${index}`}>
+          <NavbarMenuItem key={`${item.path}-${index}`}>
             <Link
-              color={
-                index === 2
-                  ? "primary"
-                  : index === menuItems.length - 1
-                  ? "danger"
-                  : "foreground"
-              }
-              className="w-full"
+              color="foreground"
+              className="w-full hover:text-primary duration-300 transition-colors"
               href={item.path}
               size="lg"
             >
