@@ -14,9 +14,12 @@ import {
 import Image from "next/image";
 import { IoMdSearch } from "react-icons/io";
 import { HiOutlineShoppingBag } from "react-icons/hi";
+import { usePathname } from "next/navigation";
 
 export default function Nav() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const pathname = usePathname();
+  //   console.log(pathname);
 
   const menuItems = [
     {
@@ -66,7 +69,9 @@ export default function Nav() {
             <Link
               color="foreground"
               href={menu.path}
-              className={`hover:text-primary duration-300 transition-colors`}
+              className={`hover:text-primary duration-300 transition-colors ${
+                pathname === menu.path ? "text-primary font-bold" : ""
+              }`}
             >
               {menu.title}
             </Link>
@@ -93,7 +98,9 @@ export default function Nav() {
           <NavbarMenuItem key={`${menu.path}-${index}`}>
             <Link
               color="foreground"
-              className="w-full hover:text-primary duration-300 transition-colors"
+              className={`hover:text-primary duration-300 transition-colors ${
+                pathname === menu.path ? "text-primary font-bold" : ""
+              }`}
               href={menu.path}
               size="lg"
             >
