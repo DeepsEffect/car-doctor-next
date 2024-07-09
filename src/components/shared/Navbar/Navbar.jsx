@@ -12,6 +12,8 @@ import {
   Button,
 } from "@nextui-org/react";
 import Image from "next/image";
+import { IoMdSearch } from "react-icons/io";
+import { HiOutlineShoppingBag } from "react-icons/hi";
 
 export default function Nav() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -63,8 +65,8 @@ export default function Nav() {
           <NavbarItem key={menu.path}>
             <Link
               color="foreground"
-              className="hover:text-primary duration-300 transition-colors"
               href={menu.path}
+              className={`hover:text-primary duration-300 transition-colors`}
             >
               {menu.title}
             </Link>
@@ -74,22 +76,28 @@ export default function Nav() {
 
       <NavbarContent justify="end">
         <NavbarItem>
-          <Button color="primary" variant="bordered">
+          <HiOutlineShoppingBag className="text-2xl" />
+        </NavbarItem>
+        <NavbarItem>
+          <IoMdSearch className="text-2xl" />
+        </NavbarItem>
+        <NavbarItem>
+          <Button radius="none" color="primary" variant="bordered">
             Appointment
           </Button>
         </NavbarItem>
       </NavbarContent>
       {/* mobile menu */}
       <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item.path}-${index}`}>
+        {menuItems.map((menu, index) => (
+          <NavbarMenuItem key={`${menu.path}-${index}`}>
             <Link
               color="foreground"
               className="w-full hover:text-primary duration-300 transition-colors"
-              href={item.path}
+              href={menu.path}
               size="lg"
             >
-              {item.title}
+              {menu.title}
             </Link>
           </NavbarMenuItem>
         ))}
