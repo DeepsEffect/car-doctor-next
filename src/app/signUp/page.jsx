@@ -32,7 +32,7 @@ const page = () => {
         );
       }
 
-      const data = await res.json();
+      // const data = await res.json();
       // console.log(data);
       alert("signed up successfully");
       form.reset();
