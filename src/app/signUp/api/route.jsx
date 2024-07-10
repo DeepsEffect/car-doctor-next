@@ -1,20 +1,38 @@
 import { connectDB } from "@/lib/connectDB";
-import bcrypt from 'bcrypt'
+import bcrypt from "bcrypt";
+
 export const POST = async (request) => {
-  const newUser = await request.json();
   try {
+    const newUser = await request.json();
+
+    // Validate input data
+    if (!newUser.name || !newUser.email || !newUser.password) {
+      return new Response(
+        JSON.stringify({ message: "All fields are required" }),
+        { status: 400 }
+      );
+    }
+
     const db = await connectDB();
     const userCollection = db.collection("users");
     const exists = await userCollection.findOne({ email: newUser.email });
+
     if (exists) {
-      return Response.json({ message: "user exists!" }, { status: 304 });
+      return new Response(JSON.stringify({ message: "User exists!" }), {
+        status: 409,
+      });
     }
-    const hashedPassword = bcrypt.hashSync(newUser.password, 14)
-    const res = await userCollection.insertOne({...newUser, password: hashedPassword});
-    return Response.json({ message: "user created" }, { status: 200 });
+
+    const hashedPassword = bcrypt.hashSync(newUser.password, 14);
+    await userCollection.insertOne({ ...newUser, password: hashedPassword });
+
+    return new Response(JSON.stringify({ message: "User created" }), {
+      status: 201,
+    });
   } catch (error) {
-    return Response.json(
-      { message: "something went wrong", error },
+    console.error("Server error:", error);
+    return new Response(
+      JSON.stringify({ message: "Something went wrong", error: error.message }),
       { status: 500 }
     );
   }
