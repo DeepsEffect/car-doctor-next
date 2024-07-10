@@ -19,6 +19,7 @@ import { usePathname } from "next/navigation";
 export default function Nav() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const pathname = usePathname();
+  let user = false;
   //   console.log(pathname);
 
   const menuItems = [
@@ -87,10 +88,43 @@ export default function Nav() {
           <IoMdSearch className="text-2xl" />
         </NavbarItem>
         <NavbarItem>
-          <Button radius="none" color="primary" variant="bordered">
+          <Button
+            className="font-bold"
+            radius="none"
+            color="primary"
+            variant="bordered"
+          >
             Appointment
           </Button>
         </NavbarItem>
+
+        {user ? (
+          <>
+            <NavbarItem>
+              <Button
+                className="text-white font-bold hidden lg:flex"
+                radius="none"
+                color="primary"
+              >
+                Logout
+              </Button>
+            </NavbarItem>
+          </>
+        ) : (
+          <>
+            <NavbarItem>
+              <Link href="/login">
+                <Button
+                  className="text-white font-bold hidden lg:flex"
+                  radius="none"
+                  color="primary"
+                >
+                  Login
+                </Button>
+              </Link>
+            </NavbarItem>
+          </>
+        )}
       </NavbarContent>
       {/* mobile menu */}
       <NavbarMenu>

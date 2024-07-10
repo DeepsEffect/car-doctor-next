@@ -1,5 +1,6 @@
 "use client";
 import { Button, Input } from "@nextui-org/react";
+import Link from "next/link";
 import React from "react";
 
 const page = () => {
@@ -44,7 +45,7 @@ const page = () => {
 
   return (
     <div>
-      <h2 className="text-center font-bold">Please sign in</h2>
+      <h2 className="text-center font-bold">Please sign Up</h2>
       <form
         onSubmit={handleSignUp}
         className="flex max-w-md justify-center mx-auto mt-4 border p-6 border-primary flex-col md:flex-nowrap gap-4"
@@ -55,6 +56,9 @@ const page = () => {
         <Button color="primary" className="font-bold text-white" type="submit">
           Sign Up
         </Button>
+        <span>
+          Already have an account? <Link href={"/login"}>Login</Link>
+        </span>
       </form>
     </div>
   );
