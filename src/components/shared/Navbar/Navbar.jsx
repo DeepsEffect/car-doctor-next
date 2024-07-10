@@ -15,35 +15,14 @@ import Image from "next/image";
 import { IoMdSearch } from "react-icons/io";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { usePathname } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 
 export default function Nav() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const pathname = usePathname();
-  let user = false;
+  const session = useSession();
+  console.log(session);
   //   console.log(pathname);
-
-  const menuItems = [
-    {
-      title: "Home",
-      path: "/",
-    },
-    {
-      title: "About",
-      path: "/about",
-    },
-    {
-      title: "Services",
-      path: "/services",
-    },
-    {
-      title: "Blog",
-      path: "/blog",
-    },
-    {
-      title: "Contact",
-      path: "/contact",
-    },
-  ];
 
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -98,10 +77,11 @@ export default function Nav() {
           </Button>
         </NavbarItem>
 
-        {user ? (
+        {session.data ? (
           <>
             <NavbarItem>
               <Button
+                onClick={() => signOut()}
                 className="text-white font-bold hidden lg:flex"
                 radius="none"
                 color="primary"
@@ -146,3 +126,25 @@ export default function Nav() {
     </Navbar>
   );
 }
+const menuItems = [
+  {
+    title: "Home",
+    path: "/",
+  },
+  {
+    title: "About",
+    path: "/about",
+  },
+  {
+    title: "Services",
+    path: "/services",
+  },
+  {
+    title: "Blog",
+    path: "/blog",
+  },
+  {
+    title: "Contact",
+    path: "/contact",
+  },
+];

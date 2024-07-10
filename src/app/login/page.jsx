@@ -3,8 +3,10 @@ import { Button, Input } from "@nextui-org/react";
 import React from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
+  const router = useRouter();
   const handleLogin = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -17,7 +19,10 @@ const page = () => {
         redirect: false,
       });
 
-      console.log(res);
+      // console.log(res);
+      if (res.status === 200) {
+        router.push("/");
+      }
     } catch (error) {
       console.error("Sign in error:", error);
     }
@@ -42,4 +47,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
