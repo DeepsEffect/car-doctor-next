@@ -19,8 +19,12 @@ const Page = () => {
         redirect: false,
       });
 
-      // console.log(res);
-      if (res.status === 200) {
+      console.log(res);
+      if (res.error) {
+        // Handle the error case
+        console.error("Sign in error:", res.error);
+      } else {
+        // If there's no error, redirect to the homepage
         router.push("/");
       }
     } catch (error) {

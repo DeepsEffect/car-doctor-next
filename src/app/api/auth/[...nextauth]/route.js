@@ -11,35 +11,48 @@ const handler = NextAuth({
   providers: [
     CredentialsProvider({
       credentials: {
-        email: {},
-        password: {},
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         const { email, password } = credentials;
         if (!email || !password) {
-          return null;
+          console.error("Email or password not provided");
+          throw new Error("Email or password not provided");
         }
 
         const db = await connectDB();
         const currentUser = await db.collection("users").findOne({ email });
         if (!currentUser) {
-          return null;
+          console.error("No user found with this email");
+          throw new Error("No user found with this email");
         }
 
-        const passwordMatched = bcrypt.compareSync(
+        const passwordMatched = await bcrypt.compare(
           password,
           currentUser.password
         );
-
-        if (!password) {
-          return null;
+        if (!passwordMatched) {
+          console.error("Password does not match");
+          throw new Error("Password does not match");
         }
 
         return currentUser;
       },
     }),
   ],
-  callback: {},
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user._id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.id = token.id;
+      return session;
+    },
+  },
   pages: {
     signIn: "/login",
   },

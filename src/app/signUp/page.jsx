@@ -3,7 +3,7 @@ import { Button, Input } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
 
-const page = () => {
+const Page = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -36,6 +36,7 @@ const page = () => {
       // console.log(data);
       alert("signed up successfully");
       form.reset();
+      router.push("/login");
     } catch (error) {
       console.error("Error:", error);
       // Display user-friendly message
@@ -64,4 +65,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
