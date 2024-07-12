@@ -1,16 +1,17 @@
 "use client";
 import { Button } from "@nextui-org/react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 const SocialLogin = () => {
   const router = useRouter();
+  const session = useSession()
   const handleSocialLogin = async (provider) => {
-    const res = await signIn(provider);
-    // if (res.status === "authenticated") {
-    //   router.push("/");
-    // }
+    const res = await signIn(provider, {redirect: false})
   };
+  if(session.status === 'authenticated'){
+    router.push('/')
+  }
   return (
     <div className="flex gap-4 justify-center">
       <Button
