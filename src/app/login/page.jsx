@@ -4,6 +4,7 @@ import React from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import SocialLogin from "@/components/shared/SocialLogin/SocialLogin";
 
 const Page = () => {
   const router = useRouter();
@@ -43,6 +44,7 @@ const Page = () => {
         <Button color="primary" className="font-bold text-white" type="submit">
           Login
         </Button>
+        <SocialLogin />
         <span>
           Don&apos;t have an account? <Link href={"/signUp"}>Sign Up</Link>
         </span>

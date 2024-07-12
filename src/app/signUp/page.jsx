@@ -1,4 +1,5 @@
 "use client";
+import SocialLogin from "@/components/shared/SocialLogin/SocialLogin";
 import { Button, Input } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
@@ -57,6 +58,7 @@ const Page = () => {
         <Button color="primary" className="font-bold text-white" type="submit">
           Sign Up
         </Button>
+        <SocialLogin />
         <span>
           Already have an account? <Link href={"/login"}>Login</Link>
         </span>
