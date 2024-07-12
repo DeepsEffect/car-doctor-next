@@ -52,15 +52,26 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user._id;
+    async signIn({ user, account }) {
+      if (account.provider === "google" || account.provider === "github") {
+        const { name, email, image } = user;
+        try {
+          const db = await connectDB();
+          const userCollection = db.collection("users");
+          const userExists = await userCollection.findOne({ email });
+          if (!userExists) {
+            // send to db
+            const res = await userCollection.insertOne(user);
+            return user;
+          } else {
+            return user;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        return user;
       }
-      return token;
-    },
-    async session({ session, token }) {
-      session.user.id = token.id;
-      return session;
     },
   },
   pages: {
